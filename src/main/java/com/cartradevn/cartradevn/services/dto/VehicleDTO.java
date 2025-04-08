@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class VehicleDTO {
     private Long id;
+    private Long userId; 
     private String brand;
     private String model;
     private String year;
@@ -25,29 +26,29 @@ public class VehicleDTO {
     }
 
     @AssertTrue(message = "Model không được để trống")
-    private boolean isModelValid() {
+    public boolean isModelValid() {
         return model != null && !model.trim().isEmpty();
     }
 
     @AssertTrue(message = "Giá xe phải lớn hơn 0")
-    private boolean isPriceValid() {
+    public boolean isPriceValid() {
         return price != null && price > 0;
     }
 
     @AssertTrue(message = "City không được để trống")
-    private boolean isCityValid() {
+    public boolean isCityValid() {
         return city != null && !city.trim().isEmpty();
     }
 
     @AssertTrue(message = "Condition chỉ được là 'new' hoặc 'used'")
-    private boolean isConditionValid() {
+    public boolean isConditionValid() {
         if (condition == null) return true; // optional field
         return condition.equalsIgnoreCase("new") || 
                condition.equalsIgnoreCase("used");
     }
 
     @AssertTrue(message = "FuelType không hợp lệ")
-    private boolean isFuelTypeValid() {
+    public boolean isFuelTypeValid() {
         if (fuelType == null) return true; // optional field
         String fuel = fuelType.toLowerCase();
         return fuel.equals("petrol") || 
