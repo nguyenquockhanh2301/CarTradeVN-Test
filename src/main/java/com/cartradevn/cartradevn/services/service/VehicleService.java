@@ -1,5 +1,7 @@
 package com.cartradevn.cartradevn.services.service;
 
+import com.cartradevn.cartradevn.administration.entity.User;
+import com.cartradevn.cartradevn.administration.respository.UserRepo;
 import com.cartradevn.cartradevn.services.VehicleException;
 import com.cartradevn.cartradevn.services.dto.VehicleDTO;
 import com.cartradevn.cartradevn.services.entity.Vehicle;
@@ -17,10 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class VehicleService {
     private final VehicleRepo vehicleRepo;
+    private final UserRepo userRepo;
 
     @Autowired
-    private VehicleService(VehicleRepo vehicleRepo) {
+    private VehicleService(VehicleRepo vehicleRepo, UserRepo userRepo) {
         this.vehicleRepo = vehicleRepo;
+        this.userRepo = userRepo;
     }
 
     // Lấy danh sách tất cả xe
@@ -65,6 +69,9 @@ public class VehicleService {
             if (vehicleDTO == null) {
                 throw new VehicleException.ValidationException("Vehicle data không được null");
             }
+            // Tìm user
+            User user = userRepo.findById(vehicleDTO.getUserId())
+                .orElseThrow(() -> new VehicleException("User not found with id: " + vehicleDTO.getUserId()));
             Vehicle vehicle = new Vehicle();
             vehicle.setBrand(vehicleDTO.getBrand());
             vehicle.setModel(vehicleDTO.getModel());
@@ -77,6 +84,7 @@ public class VehicleService {
             vehicle.setDescription(vehicleDTO.getDescription());
             vehicle.setStatus("pending"); // Trạng thái mặc định là 'pending'
             vehicle.setCreatedAt(LocalDateTime.now()); // Set createdAt to current time
+            vehicle.setUser(user); // Set user
             // Lưu xe vào cơ sở dữ liệu
             Vehicle savedVehicle = vehicleRepo.save(vehicle);
             // Chuyển đổi xe đã lưu thành DTO
@@ -92,6 +100,7 @@ public class VehicleService {
     private VehicleDTO convertToDTO(Vehicle vehicle) {
         VehicleDTO vehicleDTO = new VehicleDTO();
         vehicleDTO.setId(vehicle.getId());
+        vehicleDTO.setUserId(vehicle.getUser().getId()); // Lấy ID của người dùng từ đối tượng Vehicle
         vehicleDTO.setBrand(vehicle.getBrand());
         vehicleDTO.setModel(vehicle.getModel());
         vehicleDTO.setYear(vehicle.getYear());

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cartradevn.cartradevn.services.VehicleException;
 import com.cartradevn.cartradevn.services.dto.VehicleDTO;
 import com.cartradevn.cartradevn.services.service.VehicleService;
 
@@ -68,7 +69,11 @@ public class VehicleController {
 
     @PostMapping
     public ResponseEntity<VehicleDTO> createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(vehicleService.createVehicle(vehicleDTO));
+        try {
+            VehicleDTO created = vehicleService.createVehicle(vehicleDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        } catch (Exception e) {
+            throw new VehicleException("Error creating vehicle: " + e.getMessage());
+        }
     }
 }
