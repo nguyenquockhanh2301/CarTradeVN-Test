@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cartradevn.cartradevn.administration.controller.UserResponseDTO;
 import com.cartradevn.cartradevn.administration.dto.LoginDTO;
 import com.cartradevn.cartradevn.administration.dto.RegisterDTO;
 import com.cartradevn.cartradevn.administration.entity.User;
@@ -22,7 +23,15 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User register(RegisterDTO registerDTO) {
+    private UserResponseDTO convertToResponeDTO(User user) {
+        UserResponseDTO dto = new UserResponseDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setRole(user.getRole().toString());
+        return dto;
+    }
+
+    public UserResponseDTO register(RegisterDTO registerDTO) {
         // Check if the username or email already exists
         if (userRepo.existsByUsername(registerDTO.getUsername())) {
             throw new RuntimeException("Username đã tồn tại");
@@ -39,10 +48,11 @@ public class AuthService {
         user.setRole(registerDTO.getRole());
 
         // Save the user to the database
-        return userRepo.save(user);
+        User savedUser = userRepo.save(user);
+        return convertToResponeDTO(savedUser);
     }
 
-    public User login(LoginDTO loginDTO) {
+    public UserResponseDTO login(LoginDTO loginDTO) {
         // Find the user by username
         User user = userRepo.findByUsername(loginDTO.getUsername());
         if (user == null) {
@@ -54,6 +64,6 @@ public class AuthService {
             throw new RuntimeException("Mật khẩu không đúng");
         }
 
-        return user;
+        return convertToResponeDTO(user);
     }
 }

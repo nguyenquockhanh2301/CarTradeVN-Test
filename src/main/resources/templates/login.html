@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 
 <!-- Mirrored from creativelayers.net/themes/boxcar-html/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 Dec 2024 05:58:08 GMT -->
@@ -6,14 +7,14 @@
 <meta charset="utf-8">
 <title>BOXCAR | HTML Template</title>
 <!-- Stylesheets -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/slick-theme.css">
-<link rel="stylesheet" type="text/css" href="css/slick.css">
-<link href="css/mmenu.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/static/css/slick-theme.css">
+<link rel="stylesheet" type="text/css" href="/static/css/slick.css">
+<link href="/static/css/mmenu.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
 
-<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-<link rel="icon" href="images/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="/static/images/favicon.png" type="image/x-icon">
+<link rel="icon" href="/static/images/favicon.png" type="image/x-icon">
 <!-- Responsive -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -282,14 +283,18 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <div class="form-box">
-                                <form>
+                                <form th:action="@{/api/v1/auth/login}" method="post">
                                     <div class="form_boxes">
-                                        <label>Email or Username</label>
-                                        <input type="text" name="name" placeholder="Creativelayer088" />
+                                        <label>Username</label>
+                                        <input type="text" name="username" placeholder="Enter username" required />
                                     </div>
                                     <div class="form_boxes">
                                         <label>Password</label>
-                                        <input type="password" name="password" placeholder="********" />
+                                        <input type="password" name="password" placeholder="Enter password" required />
+                                    </div>
+                                    <!-- Hiển thị thông báo lỗi nếu có -->
+                                    <div th:if="${error}" class="alert alert-danger">
+                                        <p th:text="${error}"></p>
                                     </div>
                                     <div class="btn-box">
                                         <label class="contain">Remember
@@ -299,7 +304,7 @@
                                         <a href="#" class="pasword-btn">Forgotten password?</a>
                                     </div>
                                     <div class="form-submit">
-                                        <button type="submit" class="theme-btn">Login <img src="images/arrow.svg" alt="" />
+                                        <button type="submit" class="theme-btn">Login <img th:src="@{/images/arrow.svg}" alt="" />
                                         </button>
                                     </div>
                                 </form>
@@ -312,37 +317,34 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Register -->
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                             <div class="form-box two">
-                                <form>
+                                <form th:action="@{/api/v1/auth/register}" method="post">
                                     <div class="form_boxes">
                                         <label>Username</label>
-                                        <input type="text" name="name" placeholder="Creativelayer088" />
+                                        <input type="text" name="username" placeholder="Enter username" required />
                                     </div>
                                     <div class="form_boxes">
                                         <label>Email</label>
-                                        <input type="email" name="email" placeholder="Creative@gmail.com" />
-                                    </div>
-                                    <div class="form_boxes">
-                                        <label>Phone</label>
-                                        <input type="number" name="phone" placeholder="+67" />
+                                        <input type="email" name="email" placeholder="Enter email" required />
                                     </div>
                                     <div class="form_boxes">
                                         <label>Password</label>
-                                        <input type="password" name="password" placeholder="********" />
+                                        <input type="password" name="password" placeholder="Enter password" />
                                     </div>
                                     <div class="btn-box-three">
-                                        <label class="contain">Private seller
-                                            <input type="radio" checked="checked" name="radio">
+                                        <label class="contain">Seller
+                                            <input type="radio" name="role" value="SELLER" checked="checked">
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="contain">Business seller
-                                            <input type="radio" checked="checked" name="radio">
+                                        <label class="contain">Buyer
+                                            <input type="radio" name="role" value="BUYER" checked="checked">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                     <div class="form-submit">
-                                        <button type="submit" class="theme-btn">Login <img src="images/arrow.svg" alt="" />
+                                        <button type="submit" class="theme-btn">Register <img th:src="@{/images/arrow.svg}" alt="" />
                                         </button>
                                     </div>
                                     <div class="btn-box">
@@ -350,6 +352,10 @@
                                             <input type="checkbox" checked="checked">
                                             <span class="checkmark"></span>
                                         </label>
+                                    </div>
+                                    <!-- Hiển thị thông báo lỗi nếu có -->
+                                    <div th:if="${error}" class="alert alert-danger">
+                                        <p th:text="${error}"></p>
                                     </div>
                                 </form>
                                 <div class="btn-box-two">
@@ -509,18 +515,18 @@
 <!-- Scroll To Top -->
 <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div>
 
-<script src="js/jquery.js"></script> 
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/slick-animation.min.js"></script>
-<script src="js/jquery.fancybox.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/appear.js"></script>
-<script src="js/mixitup.js"></script>
-<script src="js/knob.js"></script>
-<script src="js/mmenu.js"></script>
-<script src="js/main.js"></script>
+<script src="/static/js/jquery.js"></script> 
+<script src="/static/js/popper.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/slick.min.js"></script>
+<script src="/static/js/slick-animation.min.js"></script>
+<script src="/static/js/jquery.fancybox.js"></script>
+<script src="/static/js/wow.js"></script>
+<script src="/static/js/appear.js"></script>
+<script src="/static/js/mixitup.js"></script>
+<script src="/static/js/knob.js"></script>
+<script src="/static/js/mmenu.js"></script>
+<script src="/static/js/main.js"></script>
 </body>
 
 <!-- Mirrored from creativelayers.net/themes/boxcar-html/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 Dec 2024 05:58:08 GMT -->
