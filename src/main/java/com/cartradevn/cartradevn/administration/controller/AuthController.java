@@ -46,30 +46,30 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("S", "Đăng ký thành công");
             return "redirect:/login";
         } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("E", e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/register";
         }
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password, HttpSession session,
-                        RedirectAttributes redirectAttributes) {
-        try {
-            UserResponseDTO userDto = authService.login(new LoginDTO(username, password));
-            session.setAttribute("user", userDto);
-            // Redirect base on role
-            if (UserRole.valueOf(userDto.getRole()) == UserRole.ADMIN) {
-                return "redirect:/dashboard";
-            } else {
-                return "redirect:/index-9";
-            }
-        } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("E", e.getMessage());
-            return "redirect:/login";
-        }
+    // @PostMapping("/login")
+    // public String login(@RequestParam String username,
+    //                     @RequestParam String password, HttpSession session,
+    //                     RedirectAttributes redirectAttributes) {
+    //     try {
+    //         UserResponseDTO userDto = authService.login(new LoginDTO(username, password));
+    //         session.setAttribute("user", userDto);
+    //         // Redirect base on role
+    //         if (UserRole.valueOf(userDto.getRole()) == UserRole.ADMIN) {
+    //             return "redirect:/dashboard";
+    //         } else {
+    //             return "redirect:/index-9";
+    //         }
+    //     } catch (RuntimeException e) {
+    //         redirectAttributes.addFlashAttribute("E", e.getMessage());
+    //         return "redirect:/login";
+    //     }
 
-    }
+    // }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
