@@ -1,5 +1,7 @@
 package com.cartradevn.cartradevn.administration.entity;
 
+import com.cartradevn.cartradevn.administration.Enum.UserRole;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,8 +26,3 @@ public class User {
     private UserRole role;
 }
 
-enum UserRole {
-    BUYER,
-    SELLER,
-    ADMIN
-}
