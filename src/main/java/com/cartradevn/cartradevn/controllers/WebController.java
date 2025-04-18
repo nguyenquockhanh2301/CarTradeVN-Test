@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.cartradevn.cartradevn.administration.Enum.UserRole;
-import com.cartradevn.cartradevn.administration.controller.UserResponeDTO;
+import com.cartradevn.cartradevn.administration.controller.UserResponseDTO;
 import com.cartradevn.cartradevn.administration.entity.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 public class WebController {
     @GetMapping({"/", "/index-9"})
     public String index(HttpSession session) {
-        UserResponeDTO userDto = (UserResponeDTO) session.getAttribute("user");
+        UserResponseDTO userDto = (UserResponseDTO) session.getAttribute("user");
         if (userDto == null) {
             return "redirect:/login";
         }

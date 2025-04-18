@@ -56,7 +56,7 @@ public class AuthController {
                         @RequestParam String password, HttpSession session,
                         RedirectAttributes redirectAttributes) {
         try {
-            UserResponeDTO userDto = authService.login(new LoginDTO(username, password));
+            UserResponseDTO userDto = authService.login(new LoginDTO(username, password));
             session.setAttribute("user", userDto);
             // Redirect base on role
             if (UserRole.valueOf(userDto.getRole()) == UserRole.ADMIN) {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.cartradevn.cartradevn.administration.controller.UserResponeDTO;
+import com.cartradevn.cartradevn.administration.controller.UserResponseDTO;
 import com.cartradevn.cartradevn.administration.dto.LoginDTO;
 import com.cartradevn.cartradevn.administration.dto.RegisterDTO;
 import com.cartradevn.cartradevn.administration.entity.User;
@@ -23,14 +23,15 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    private UserResponeDTO convertToResponeDTO(User user) {
-        UserResponeDTO dto = new UserResponeDTO();
+    private UserResponseDTO convertToResponeDTO(User user) {
+        UserResponseDTO dto = new UserResponseDTO();
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
+        dto.setRole(user.getRole().toString());
         return dto;
     }
 
-    public UserResponeDTO register(RegisterDTO registerDTO) {
+    public UserResponseDTO register(RegisterDTO registerDTO) {
         // Check if the username or email already exists
         if (userRepo.existsByUsername(registerDTO.getUsername())) {
             throw new RuntimeException("Username đã tồn tại");
@@ -51,7 +52,7 @@ public class AuthService {
         return convertToResponeDTO(savedUser);
     }
 
-    public UserResponeDTO login(LoginDTO loginDTO) {
+    public UserResponseDTO login(LoginDTO loginDTO) {
         // Find the user by username
         User user = userRepo.findByUsername(loginDTO.getUsername());
         if (user == null) {
