@@ -11,16 +11,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/api/**")
-                        .permitAll()
-                        .anyRequest().authenticated());
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/login", "/register", "/static/**", 
+                               "/css/**", "/js/**", "/images/**", "/fonts/**", 
+                               "/api/v1/auth/**").permitAll()
+                .requestMatchers("/admin/**", "/dashboard/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            );
         return http.build();
     }
     

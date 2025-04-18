@@ -62,7 +62,7 @@ public class AuthController {
             if (user.getRole() == UserRole.ADMIN) {
                 return "redirect:/dashboard";
             } else {
-                return "redirect:/index";
+                return "redirect:/index-9";
             }
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("E", e.getMessage());
