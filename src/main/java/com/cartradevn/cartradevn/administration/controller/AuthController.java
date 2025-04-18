@@ -56,10 +56,10 @@ public class AuthController {
                         @RequestParam String password, HttpSession session,
                         RedirectAttributes redirectAttributes) {
         try {
-            User user = authService.login(new LoginDTO(username, password));
-            session.setAttribute("user", user);
+            UserResponeDTO userDto = authService.login(new LoginDTO(username, password));
+            session.setAttribute("user", userDto);
             // Redirect base on role
-            if (user.getRole() == UserRole.ADMIN) {
+            if (UserRole.valueOf(userDto.getRole()) == UserRole.ADMIN) {
                 return "redirect:/dashboard";
             } else {
                 return "redirect:/index-9";
