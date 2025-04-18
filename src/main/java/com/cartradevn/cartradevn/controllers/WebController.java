@@ -13,10 +13,6 @@ import jakarta.servlet.http.HttpSession;
 public class WebController {
     @GetMapping({"/", "/index-9"})
     public String index(HttpSession session) {
-        UserResponseDTO userDto = (UserResponseDTO) session.getAttribute("user");
-        if (userDto == null) {
-            return "redirect:/login";
-        }
         return "index-9";
     }
 
