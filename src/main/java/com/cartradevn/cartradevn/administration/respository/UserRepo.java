@@ -11,6 +11,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
     User findByUsername(String username);
     // Tìm kiếm người dùng theo email
     User findByEmail(String email);
-    
-    
+    // Kiểm tra xem người dùng có tồn tại hay không
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 }
