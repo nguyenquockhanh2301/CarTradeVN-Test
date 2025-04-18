@@ -1,9 +1,13 @@
 package com.cartradevn.cartradevn.services.dto;
 
 import jakarta.validation.constraints.AssertTrue;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class VehicleDTO {
     private Long id;
     private Long userId; 

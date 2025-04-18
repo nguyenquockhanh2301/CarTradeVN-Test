@@ -1,17 +1,25 @@
 package com.cartradevn.cartradevn.administration.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cartradevn.cartradevn.administration.Enum.UserRole;
 import com.cartradevn.cartradevn.administration.dto.LoginDTO;
 import com.cartradevn.cartradevn.administration.dto.RegisterDTO;
 import com.cartradevn.cartradevn.administration.entity.User;
 import com.cartradevn.cartradevn.administration.services.AuthService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,24 +33,47 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @GetMapping("/login")
+    public String showFormLogin() {
+        return "login";
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterDTO registerDTO) {
+    public String register(@ModelAttribute RegisterDTO registerDTO,
+                           RedirectAttributes redirectAttributes) {
         try {
-            User user = authService.register(registerDTO);
-            return ResponseEntity.ok(user);
+            authService.register(registerDTO);
+            redirectAttributes.addFlashAttribute("S", "Đăng ký thành công");
+            return "redirect:/login";
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            redirectAttributes.addFlashAttribute("E", e.getMessage());
+            return "redirect:/register";
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginDTO loginDTO) {
+    public String login(@RequestParam String username,
+                        @RequestParam String password, HttpSession session,
+                        RedirectAttributes redirectAttributes) {
         try {
-            User user = authService.login(loginDTO);
-            return ResponseEntity.ok(user);
+            User user = authService.login(new LoginDTO(username, password));
+            session.setAttribute("user", user);
+            // Redirect base on role
+            if (user.getRole() == UserRole.ADMIN) {
+                return "redirect:/dashboard";
+            } else {
+                return "redirect:/index";
+            }
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            redirectAttributes.addFlashAttribute("E", e.getMessage());
+            return "redirect:/login";
         }
 
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Invalidate the session to log out the user
+        return "redirect:/login"; // Redirect to the login page after logout
     }
 }
