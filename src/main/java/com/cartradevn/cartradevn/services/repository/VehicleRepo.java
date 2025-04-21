@@ -25,6 +25,8 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
            "(:city IS NULL OR v.city = :city) AND " +
            "(:brand IS NULL OR v.brand = :brand) AND " +
            "(:model IS NULL OR v.model = :model) AND " +
+           "(:name IS NULL OR v.name = :name) AND " +
+           "(:year IS NULL OR v.year = :year) AND " +
            "(:minPrice IS NULL OR v.price >= :minPrice) AND " +
            "(:maxPrice IS NULL OR v.price <= :maxPrice) AND " +
            "(:condition IS NULL OR v.condition = :condition) AND " +
@@ -33,6 +35,8 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
         @Param("city") String city,
         @Param("brand") String brand,
         @Param("model") String model,
+        @Param("name") String name,
+        @Param("year") Integer year,
         @Param("minPrice") Double minPrice,
         @Param("maxPrice") Double maxPrice,
         @Param("condition") String condition,
@@ -42,6 +46,10 @@ public interface VehicleRepo extends JpaRepository<Vehicle, Long> {
     
     // Các phương thức tìm kiếm cơ bản
     List<Vehicle> findByCity(String city);
+    List<Vehicle> findByName(String name);
+    List<Vehicle> findByNameContainingIgnoreCase(String name);
+    List<Vehicle> findByBrandAndNameContainingIgnoreCase(String brand, String name);
+    List<Vehicle> findByYear(Integer year);
     List<Vehicle> findByBrandAndModel(String brand, String model);
     List<Vehicle> findByPriceBetween(Double minPrice, Double maxPrice);
     List<Vehicle> findByCondition(String condition);

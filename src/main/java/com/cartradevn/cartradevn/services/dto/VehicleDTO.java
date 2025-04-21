@@ -13,7 +13,8 @@ public class VehicleDTO {
     private Long userId; 
     private String brand;
     private String model;
-    private String year;
+    private String name;
+    private Integer year;
     private String color;
     private String condition; // Corrected spelling
     private String fuelType; // Petrol/Electric/... 
@@ -33,6 +34,11 @@ public class VehicleDTO {
     @AssertTrue(message = "Model không được để trống")
     public boolean isModelValid() {
         return model != null && !model.trim().isEmpty();
+    }
+
+    @AssertTrue(message = "Name không được để trống")
+    public boolean isNameValid() {
+        return name != null && !name.trim().isEmpty();
     }
 
     @AssertTrue(message = "Giá xe phải lớn hơn 0")

@@ -58,13 +58,15 @@ public class VehicleController {
     public ResponseEntity<List<VehicleDTO>> getVehicles(
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer year,
             @RequestParam(required = false) String model,
             @RequestParam(required = false) Double minPrice,
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(required = false) String condition,
             @RequestParam(required = false) String fuelType) {
         return ResponseEntity.ok(vehicleService.getVehicles(
-                city, brand, model, minPrice, maxPrice, condition, fuelType));
+                city, brand, name, year, model, minPrice, maxPrice, condition, fuelType));
     }
 
     @PostMapping

@@ -35,10 +35,19 @@ public class VehicleService {
     }
 
     // Lấy danh sách xe với bộ lọc
-    public List<VehicleDTO> getVehicles(String city, String brand, String model, Double minPrice, Double maxPrice,
+    public List<VehicleDTO> getVehicles(String city, String brand, String name, Integer year, String model, Double minPrice, Double maxPrice,
             String condition, String fuelType) {
         List<Vehicle> vehicles = vehicleRepo.findAll();
 
+        // áp dụng bộ lọc
+        if (name != null) {
+            vehicles = vehicles.stream()
+                    .filter(v -> v.getName().toLowerCase().contains(name.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        if (year != null) {
+            vehicles = vehicles.stream().filter(v -> v.getYear().equals(year)).collect(Collectors.toList());
+        }
         if (city != null) {
             vehicles = vehicles.stream().filter(v -> v.getCity().equalsIgnoreCase(city)).collect(Collectors.toList());
         }
@@ -75,6 +84,7 @@ public class VehicleService {
             Vehicle vehicle = new Vehicle();
             vehicle.setBrand(vehicleDTO.getBrand());
             vehicle.setModel(vehicleDTO.getModel());
+            vehicle.setName(vehicleDTO.getName()); 
             vehicle.setYear(vehicleDTO.getYear());
             vehicle.setColor(vehicleDTO.getColor());
             vehicle.setCondition(vehicleDTO.getCondition());
@@ -104,6 +114,7 @@ public class VehicleService {
         vehicleDTO.setUserId(vehicle.getUser().getId()); // Lấy ID của người dùng từ đối tượng Vehicle
         vehicleDTO.setBrand(vehicle.getBrand());
         vehicleDTO.setModel(vehicle.getModel());
+        vehicleDTO.setName(vehicle.getName()); 
         vehicleDTO.setYear(vehicle.getYear());
         vehicleDTO.setColor(vehicle.getColor());
         vehicleDTO.setCondition(vehicle.getCondition());
@@ -135,6 +146,7 @@ public class VehicleService {
             // Cập nhật thông tin xe
             existingVehicle.setBrand(vehicleDTO.getBrand());
             existingVehicle.setModel(vehicleDTO.getModel());
+            existingVehicle.setName(vehicleDTO.getName());
             existingVehicle.setYear(vehicleDTO.getYear());
             existingVehicle.setColor(vehicleDTO.getColor());
             existingVehicle.setCondition(vehicleDTO.getCondition());
