@@ -20,6 +20,7 @@ public class VehicleDTO {
     private Double price;
     private String city;
     private String description;
+    private String imageUrl; // URL to the vehicle image
     private String status; // pending/approved/sold
     private String createdAt; // LocalDateTime as String for simplicity in DTO
 

@@ -82,6 +82,7 @@ public class VehicleService {
             vehicle.setPrice(vehicleDTO.getPrice());
             vehicle.setCity(vehicleDTO.getCity());
             vehicle.setDescription(vehicleDTO.getDescription());
+            vehicle.setImageUrl(vehicleDTO.getImageUrl()); // Set image URL if provided
             vehicle.setStatus("pending"); // Trạng thái mặc định là 'pending'
             vehicle.setCreatedAt(LocalDateTime.now()); // Set createdAt to current time
             vehicle.setUser(user); // Set user
@@ -110,6 +111,7 @@ public class VehicleService {
         vehicleDTO.setPrice(vehicle.getPrice());
         vehicleDTO.setCity(vehicle.getCity());
         vehicleDTO.setDescription(vehicle.getDescription());
+        vehicleDTO.setImageUrl(vehicle.getImageUrl()); // Lấy URL hình ảnh từ đối tượng Vehicle
         vehicleDTO.setStatus(vehicle.getStatus());
         if (vehicle.getCreatedAt() != null) {
             vehicleDTO.setCreatedAt(vehicle.getCreatedAt().toString()); // Chuyển đổi LocalDateTime thành String
@@ -140,6 +142,7 @@ public class VehicleService {
             existingVehicle.setPrice(vehicleDTO.getPrice());
             existingVehicle.setCity(vehicleDTO.getCity());
             existingVehicle.setDescription(vehicleDTO.getDescription());
+            existingVehicle.setImageUrl(vehicleDTO.getImageUrl()); // Cập nhật URL hình ảnh nếu có
             // Không cập nhật status và createdAt vì đây là thông tin hệ thống
 
             Vehicle updatedVehicle = vehicleRepo.save(existingVehicle);

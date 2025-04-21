@@ -45,6 +45,8 @@ public class Vehicle {
     @Column(length = 1000)
     private String description;
 
+    private String imageUrl; // URL to the vehicle image
+
     @Column(nullable = false)
     private String status; // pending/approved/sold
 
