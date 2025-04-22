@@ -54,7 +54,7 @@ public class UserService {
         dto.setUsername(user.getUsername());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole());
-        
+        dto.setCreatedAt(user.getCreatedAt());
         return dto;
     }
 }

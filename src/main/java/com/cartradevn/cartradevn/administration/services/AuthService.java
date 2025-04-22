@@ -28,6 +28,7 @@ public class AuthService {
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         dto.setRole(user.getRole().toString());
+        dto.setCreatedAt(user.getCreatedAt());
         return dto;
     }
 
@@ -46,6 +47,7 @@ public class AuthService {
         user.setEmail(registerDTO.getEmail());
         user.setPasswordHash(passwordEncoder.encode(registerDTO.getPassword()));
         user.setRole(registerDTO.getRole());
+        user.setCreatedAt(System.currentTimeMillis()); // Set the createdAt timestamp
 
         // Save the user to the database
         User savedUser = userRepo.save(user);
