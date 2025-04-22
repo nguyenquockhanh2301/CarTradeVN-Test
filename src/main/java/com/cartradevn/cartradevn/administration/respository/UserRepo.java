@@ -1,5 +1,6 @@
 package com.cartradevn.cartradevn.administration.respository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
     // Kiểm tra xem người dùng có tồn tại hay không
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
+
+    //Tìm kiếm người dùng theo username và email
+    Page<User> findByUsernameOrEmail(String username, String email, org.springframework.data.domain.Pageable pageable);
 }
