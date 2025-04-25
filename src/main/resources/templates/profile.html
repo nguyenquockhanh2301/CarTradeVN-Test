@@ -165,42 +165,57 @@
                             </div>
                         </div>
                         <div class="form-sec">
-                            <form class="row">  
+                            <form th:action="@{/profile/update}" method="post" class="row">
                                 <div class="col-lg-4">
                                     <div class="form_boxes">
-                                        <label>First Name</label>
-                                        <input name="name" type="text" placeholder="Ali">
+                                        <label>Username</label>
+                                        <input type="text" name="username" th:value="${user.username}" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <div class="form_boxes">
-                                        <label>Last Name</label>
-                                        <input name="last-name" type="text" placeholder="Tufan">
-                                    </div>
-                                </div>
+                                
                                 <div class="col-lg-4">
                                     <div class="form_boxes">
                                         <label>Email</label>
-                                        <input name="email" type="email" placeholder="creativelayers088@gmail.com">
+                                        <input type="email" name="email" th:value="${user.email}" required>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <div class="form_boxes">
-                                        <label>Phone</label>
-                                        <input name="phone" type="number" placeholder="+77">
+                                        <label>Current Password</label>
+                                        <input type="password" name="currentPassword">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <div class="form_boxes">
-                                        <label>Whatsapp</label>
-                                        <input name="whatsapp" type="number" placeholder="+98">
+                                        <label>New Password</label>
+                                        <input type="password" name="newPassword">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <div class="form_boxes">
-                                        <label>Website</label>
-                                        <input name="website" type="text" placeholder="www.creativelayers.net">
+                                        <label>Confirm New Password</label>
+                                        <input type="password" name="confirmPassword">
                                     </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="form-submit">
+                                        <button type="submit" class="theme-btn">
+                                            Update Profile
+                                            <img src="/static/images/arrow.svg" alt="">
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Messages -->
+                                <div th:if="${success}" class="alert alert-success">
+                                    <p th:text="${success}"></p>
+                                </div>
+                                <div th:if="${error}" class="alert alert-danger">
+                                    <p th:text="${error}"></p>
                                 </div>
                             </form>
                         </div>
