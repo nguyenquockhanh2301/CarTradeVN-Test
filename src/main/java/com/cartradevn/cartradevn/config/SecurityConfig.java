@@ -91,6 +91,13 @@ public class SecurityConfig {
                 })
                 .permitAll()
             )
+            .logout(logout -> logout
+                .logoutUrl("/api/v1/auth/logout")  // URL for logout
+                .logoutSuccessUrl("/login?logout=true")  // Redirect after logout
+                .invalidateHttpSession(true)  // Invalidate session
+                .deleteCookies("JSESSIONID")  // Clear cookies
+                .permitAll()
+            )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .maximumSessions(1)
