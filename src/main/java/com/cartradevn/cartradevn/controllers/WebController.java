@@ -30,6 +30,8 @@ public class WebController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private VehicleRepo vehicleRepo;
 
     @GetMapping({ "/", "/index-9" })
