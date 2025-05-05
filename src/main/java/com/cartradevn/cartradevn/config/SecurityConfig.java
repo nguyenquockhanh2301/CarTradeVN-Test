@@ -43,8 +43,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/index-9", "/faq", 
                                "/login", "/register", 
-                               "/static/**", "/css/**", "/js/**", 
-                               "/images/**", "/fonts/**").permitAll()
+                               "../static/**", "../static/css/**", "/js/**", 
+                               "../static/images/**", "/fonts/**").permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/admin-dashboard/**", "/users-list/**",
                                "/admin-profile/**", "/users/edit/**",
